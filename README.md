@@ -94,3 +94,73 @@ process browser 변수
     많은 양의 데이터를 필요로 하는 복잡한 대시보드를 만든다면 데이터를 불러 오기 위한 REST API 호출에 수 초가 소요된다.
 
     만일 데이터가 자주 변하지 않는다면 SSG와 ISR을 사용해서 데이터를 10분동안 캐싱할 수 있다.
+
+
+    Page Project Layout - _app
+
+        _app.jsx는 서버에 요청할 때 가장 먼저 실행되는 컴포넌트입니다.
+
+        페이지에 적용할 공통 레이아웃을 선언하는 곳입니다
+
+
+
+    
+    Page Project Layout - _document
+
+        _document.jsx는 app_jsx 다음에 실행됩니다.
+
+        각 페이지에서 공통적으로 사용될 html, head, body 안에 들어갈 내용을 선언합니다.
+
+        onClick 같은 이벤트나 CSS는 이 곳에 선언하지 않습니다.
+
+        만일 로직이나 스타일이 필요하다면 _app.jsx에 선언해야 합니다.
+
+        기본 코드는 다음과 같습니다
+
+        ```js
+        import [ Html, Head, Main, NextScript ]from "next/document";
+
+        export default function Document() {
+            return (
+                <Html lang="en">
+                <Head />
+                <body>
+                    <Main />
+                    <NextScript />
+                </body>
+                </Html>
+            );
+        }
+        ```
+
+
+App Project Layout - RootLayout
+
+    Children prop은 각각의 page.jsx를 받아 옵니다.
+
+    
+    Body에 header와 footer를 추가한 코드입니다.
+
+    이때 children prop을 삭제하지 않도록 주의합니다.
+
+
+    ```js
+    export default function RootLayout{{ children }} {
+        return (
+            <html lang="ko">
+            <body>
+            <header></header>
+            <main{children}></main>
+            <footer></footer>
+            </body>
+        </html>
+        )
+    }
+    ```
+
+Image component - local
+
+    WebP와 같은 최신 이미지 포맷 및 최신 포맷을 지원하지 않는 브라우저를 위해 png나 jpge와 같은 예전 이미지 포맷도 제공합니다.
+
+    Pixabay나 Unplash와 같은 외부 이미지 서비스로 이미지를 제공할 수 있습니다.
+
